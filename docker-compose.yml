@@ -23,6 +23,7 @@ services:
     env_file: .env
     links:
       - aribeth_postgres:postgres
+      - aribeth_mongo:mongo
     volumes:
       - .:/home/app/aribeth
       - aribeth_gems_2_4_0:/usr/local/bundle
@@ -34,7 +35,7 @@ services:
     container_name: aribeth_app
     command: /bin/bash bin/server.sh
     ports:
-      - 127.0.0.1:3000:3000
+      - 0.0.0.0:3000:3000
     environment:
       - RAILS_ENV=development
       - ARIBETH_POSTGRES_PORT=5432
