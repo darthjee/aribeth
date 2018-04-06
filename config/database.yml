@@ -1,0 +1,39 @@
+<%
+  socket = [
+    ENV["BOXEN_MYSQL_SOCKET"],
+    "/var/run/mysql5/mysqld.sock",
+    "/tmp/mysql.sock"
+  ].detect { |f| f && File.exist?(f) }
+  port = 5432
+%>
+
+development: &development
+  adapter: postgresql
+  encoding: utf8
+  database: aribeth_development
+  pool: 5
+  username: <%= ENV["ARIBETH_POSTGRES_USER"] || :postgres %>
+  password: <%= ENV["ARIBETH_POSTGRES_PASSWORD"] || :postgres %>
+  host: <%= ENV["ARIBETH_POSTGRES_HOST"] || :localhost %>
+<% if socket %>
+  socket: <%= socket %>
+<% else %>
+  port: <%= ENV["ARIBETH_POSTGRES_PORT"] || 5432%>
+<% end %>
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test: &test
+  <<: *development
+  database: aribeth_test
+
+test_readonly:
+  <<: *test
+
+production: &production
+  <<: *development
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+  database: <%= ENV['DB_DATABASE'] %>

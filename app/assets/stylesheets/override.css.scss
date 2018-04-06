@@ -1,0 +1,20 @@
+dt {
+  float: left;
+  clear: left;
+  padding-right: 10px;
+}
+dt:after {
+  content: ':';
+}
+
+dd {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
