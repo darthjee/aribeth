@@ -1,0 +1,59 @@
+version: '2'
+services:
+  aribeth_postgres:
+    image: postgres:9.5
+    container_name: aribeth_postgres
+    env_file: .env
+    environment:
+      POSTGRES_USER: aribeth
+      POSTGRES_PASSWORD: aribeth
+    ports:
+      - 127.0.0.1:$ARIBETH_POSTGRES_PORT:5432
+
+  #################### Base  ####################
+
+  base: &base
+    build: .
+    env_file: .env
+    links:
+      - aribeth_postgres:postgres
+    volumes:
+      - .:/home/app/aribeth
+      - aribeth_gems_2_4_0:/usr/local/bundle
+
+  #################### CONTAINERS ####################
+
+  aribeth_app:
+    <<: *base
+    container_name: aribeth_app
+    command: /bin/bash bin/server.sh
+    ports:
+      - 127.0.0.1:3000:3000
+    environment:
+      - RAILS_ENV=development
+      - ARIBETH_POSTGRES_PORT=5432
+      - ARIBETH_NEWRELIC_LICENSE
+      - ARIBETH_NEWRELIC_APP
+      - ROLLBAR_ACCESS_TOKEN
+      - ROLLBAR_CLIENT_TOKEN
+
+  aribeth_tests:
+    <<: *base
+    container_name: aribeth_tests
+    command: /bin/bash bin/tests.sh
+    environment:
+      - RAILS_ENV=test
+
+  aribeth_root:
+    <<: *base
+    user: root
+    container_name: aribeth_root
+    command: /bin/bash
+
+networks:
+  default:
+    external:
+      name: aribeth
+
+volumes:
+  aribeth_gems_2_4_0:
