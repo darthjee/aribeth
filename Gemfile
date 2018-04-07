@@ -25,6 +25,7 @@ gem 'rails_12factor', group: :production
 gem 'spring',        group: :development
 gem 'darthjee-core_ext'
 gem 'tarquinn'
+gem 'mongoid'
 gem 'bower-rails', '~> 0.11.0'
 gem 'newrelic_rpm'
 
