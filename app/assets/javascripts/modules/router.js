@@ -14,6 +14,10 @@
   };
 
   fn.directRoutes = [
+    '/races',
+    '/races/new',
+    '/races/:id',
+    '/races/:id/edit'
   ];
 
   fn.customRoutes = {
