@@ -2,7 +2,7 @@
   function Router($routeProvider) {
     this.provider = $routeProvider;
 
-    _.bindAll(this, '_setRouteConfig');
+    _.bindAll(this, '_setRouteConfig', '_setRoutesConfig');
   }
 
   var app = angular.module('aribeth'),
@@ -13,27 +13,31 @@
     controllerAs: 'controller'
   };
 
-  fn.directRoutes = [
-    '/races',
-    '/races/new',
-    '/races/:id',
-    '/races/:id/edit'
-  ];
+  fn.configs = [{
+    routes: [
+      '/races',
+      '/races/new',
+      '/races/:id',
+      '/races/:id/edit'
+    ]
+  }];
 
   fn.customRoutes = {
   };
 
   fn._bindRoutes = function () {
-    _.each(this.directRoutes, this._setRouteConfig);
+    _.each(this.configs, this._setRoutesConfig);
     _.each(this.customRoutes, this._setRouteConfig);
   };
 
-  fn._setRouteConfig = function(config, route) {
-    if (typeof route !== 'string') {
-      route = config;
-      config = {};
-    }
+  fn._setRoutesConfig = function(settings) {
+    var c = this;
+    _.each(settings.routes, function(route) {
+      c._setRouteConfig(settings.config, route);
+    });
+  };
 
+  fn._setRouteConfig = function(config, route) {
     config = _.extend({}, this.defaultConfig, {
       templateUrl: this._buildTemplateFor(route)
     }, config);
