@@ -6,8 +6,14 @@
     _.bindAll(this, '_setRouteConfig', '_setRoutesConfig');
   }
 
-  var app = angular.module('aribeth'),
-      fn = Router.prototype;
+  function RouterProvider() {
+    _.bindAll(this, 'instance');
+    this.$get = [this.instance];
+  };
+
+  var module = angular.module('router', []),
+      fn = Router.prototype,
+      fnrp = RouterProvider.prototype;
 
   fn.bindRoutes = function () {
     _.each(this.configs, this._setRoutesConfig);
@@ -44,32 +50,6 @@
     }
   }
 
-  Router.Builder = function($routeProvider, routerProvider) {
-    routerProvider.provider = $routeProvider;
-    routerProvider.defaultConfig = {
-      controller: 'Global.GenericController',
-      controllerAs: 'controller'
-    };
-    routerProvider.configs = [{
-      routes: [
-        '/races',
-        '/races/new',
-        '/races/:id',
-        '/races/:id/edit'
-      ]
-    }];
-    routerProvider.customRoutes = {
-    };
-    routerProvider.instance().bindRoutes();
-  };
-
-  function RouterProvider() {
-    _.bindAll(this, 'instance');
-    this.$get = [this.instance];
-  };
-
-  var fnrp = RouterProvider.prototype;
-
   fnrp.instance = function() {
     return this.router || this._build();
   };
@@ -83,6 +63,5 @@
     });
   };
 
-  app.provider('router', RouterProvider);
-  app.config(['$routeProvider', 'routerProvider', Router.Builder]);
+  module.provider('router', RouterProvider);
 }(window._, window.angular));

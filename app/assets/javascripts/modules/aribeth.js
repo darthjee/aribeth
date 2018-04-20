@@ -1,6 +1,6 @@
 (function(angular) {
   var module = angular.module('aribeth', [
-    'ngRoute', 'global'
+    'ngRoute', 'global', 'router'
   ]);
 
   module.config(['$httpProvider', function($httpProvider) {
