@@ -1,29 +1,24 @@
 (function(_, angular) {
-  function Router($routeProvider) {
+  function RouterBuilder($routeProvider) {
     this.provider = $routeProvider;
+  }
+
+  var fnb = RouterBuilder.prototype;
+
+  fnb.build = function(settings) {
+    return new Router(_.extend({
+      provider: this.provider
+    }, settings));
+  };
+
+  function Router(settings) {
+    _.extend(this, settings);
 
     _.bindAll(this, '_setRouteConfig', '_setRoutesConfig');
   }
 
   var app = angular.module('aribeth'),
       fn = Router.prototype;
-
-  fn.defaultConfig = {
-    controller: 'Global.GenericController',
-    controllerAs: 'controller'
-  };
-
-  fn.configs = [{
-    routes: [
-      '/races',
-      '/races/new',
-      '/races/:id',
-      '/races/:id/edit'
-    ]
-  }];
-
-  fn.customRoutes = {
-  };
 
   fn._bindRoutes = function () {
     _.each(this.configs, this._setRoutesConfig);
@@ -61,7 +56,22 @@
   }
 
   Router.Builder = function($routeProvider) {
-    new Router($routeProvider)._bindRoutes();
+    new RouterBuilder($routeProvider).build({
+      defaultConfig: {
+        controller: 'Global.GenericController',
+        controllerAs: 'controller'
+      },
+      configs: [{
+        routes: [
+          '/races',
+          '/races/new',
+          '/races/:id',
+          '/races/:id/edit'
+        ]
+      }],
+      customRoutes: {
+      }
+    })._bindRoutes();
   };
 
   app.config(['$routeProvider', Router.Builder]);
