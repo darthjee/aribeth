@@ -39,7 +39,7 @@ class RacesController < ApplicationController
 
   private
 
-  def new_json
+  def new_resource
     {}
   end
 
@@ -51,11 +51,11 @@ class RacesController < ApplicationController
     @updated_race ||= race.tap { |v| v.update(race_params) }
   end
 
-  def index_json
+  def index_resource
     Race.all
   end
 
-  def show_json
+  def show_resource
     race
   end
 
@@ -71,5 +71,5 @@ class RacesController < ApplicationController
     params.require(:race).permit(:code, :playable)
   end
 
-  alias_method :edit_json, :show_json
+  alias_method :edit_resource, :show_resource
 end

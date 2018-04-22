@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     action = params[:action]
     respond_to do |format|
       format.json do
-        render json: Serializer.serialize(send("#{action}_json"))
+        render json: Serializer.serialize(send("#{action}_resource"))
       end
       format.html { cached_render action }
     end
