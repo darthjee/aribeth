@@ -35,7 +35,10 @@ describe RacesController, type: :controller do
 
   describe "GET #index" do
     let(:parameters) { { format: :json } }
-    before { get :index, params: parameters }
+    before do
+      get :index, params: parameters
+      expected_attributes.merge!('id' => race.to_param)
+    end
 
     context 'when requestin the REST api' do
       it { expect(response).to be_success }

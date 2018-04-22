@@ -3,6 +3,8 @@ module Serializer
     case object
     when Mongoid::Document
       Serializer::Mongo.new(object).as_json
+    when Mongoid::Criteria
+      object.map { |o| Serializer::Mongo.new(o).as_json }
     when ActiveRecord::Base
       object.as_json
     when Hash

@@ -52,7 +52,7 @@ class RacesController < ApplicationController
   end
 
   def index_json
-    Race.all.as_json
+    Race.all
   end
 
   def show_json
