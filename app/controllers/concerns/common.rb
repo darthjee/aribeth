@@ -1,6 +1,7 @@
 module Common
   extend ActiveSupport::Concern
   include Tarquinn
+  include Rendereable
 
   included do
     layout :layout_for_page

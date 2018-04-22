@@ -1,5 +1,6 @@
-class RacesController < ResourceController
+class RacesController < ApplicationController
   include Common
+  include Resourceable
 
   # DELETE /races/1
   # DELETE /races/1.json
