@@ -9,26 +9,18 @@ class RacesController < ApplicationController
   alias_method :show, :render_basic
 
   # GET /races/new
-  def new
-    render_basic
-  end
+  alias_method :new, :render_basic
 
   # GET /races/1/edit
-  def edit
-    render_basic
-  end
+  alias_method :edit, :render_basic
 
   # POST /races
   # POST /races.json
-  def create
-    render json: created_race.as_json
-  end
+  alias_method :create, :render_basic
 
   # PATCH/PUT /races/1
   # PATCH/PUT /races/1.json
-  def update
-    render json: updated_race.as_json
-  end
+  alias_method :update, :render_basic
 
   # DELETE /races/1
   # DELETE /races/1.json
@@ -40,27 +32,23 @@ class RacesController < ApplicationController
   private
 
   def new_resource
-    {}
+    @new_resource ||= Race.new
   end
 
-  def created_race
-    @created_race ||= Race.create(race_params)
+  def create_resource
+    @create_resource ||= Race.create(race_params)
   end
 
-  def updated_race
-    @updated_race ||= race.tap { |v| v.update(race_params) }
-  end
-
-  def index_resource
-    Race.all
-  end
-
-  def show_resource
-    race
+  def update_resource
+    @update_resource ||= race.tap { |v| v.update(race_params) }
   end
 
   def race
-    @race ||= Race.find(race_id)
+    @race ||= races.find(race_id)
+  end
+
+  def races
+    @races ||= Race.all
   end
 
   def race_id
@@ -71,5 +59,7 @@ class RacesController < ApplicationController
     params.require(:race).permit(:code, :playable)
   end
 
-  alias_method :edit_resource, :show_resource
+  alias_method :index_resource, :races
+  alias_method :edit_resource, :race
+  alias_method :show_resource, :race
 end
