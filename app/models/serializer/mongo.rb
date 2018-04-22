@@ -6,6 +6,8 @@ class Serializer::Mongo
   end
 
   def as_json
-    resource.as_json
+    resource.as_json.tap do |hash|
+      hash['id'] = resource.to_param
+    end
   end
 end

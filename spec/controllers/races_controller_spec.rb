@@ -56,10 +56,13 @@ describe RacesController, type: :controller do
   end
 
   describe "GET #show" do
-    before { get :show, params: parameters }
+    before do
+      get :show, params: parameters
+      expected_attributes.merge!('id' => race.to_param)
+    end
 
     context 'when requestin the REST api' do
-      let(:parameters) { { id: race.id, format: :json } }
+      let(:parameters) { { id: race.to_param, format: :json } }
       it { expect(response).to be_success }
 
       it 'returns the whole race' do
