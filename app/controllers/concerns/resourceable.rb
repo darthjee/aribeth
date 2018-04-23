@@ -2,27 +2,11 @@ module Resourceable
   extend ActiveSupport::Concern
   include Rendereable
 
-  included do
-    # GET /races
-    # GET /races.json
-    alias_method :index, :render_basic
-
-    # GET /races/1
-    # GET /races/1.json
-    alias_method :show, :render_basic
-
-    # GET /races/new
-    alias_method :new, :render_basic
-
-    # GET /races/1/edit
-    alias_method :edit, :render_basic
-
-    # POST /races
-    # POST /races.json
-    alias_method :create, :render_basic
-
-    # PATCH/PUT /races/1
-    # PATCH/PUT /races/1.json
-    alias_method :update, :render_basic
+  class_methods do
+    def resource_for(name)
+      %i(index show new edit create update).each do |method|
+        alias_method method, :render_basic
+      end
+    end
   end
 end

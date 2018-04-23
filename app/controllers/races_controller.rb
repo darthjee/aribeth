@@ -2,6 +2,8 @@ class RacesController < ApplicationController
   include Common
   include Resourceable
 
+  resource_for :race
+
   # DELETE /races/1
   # DELETE /races/1.json
   def destroy
