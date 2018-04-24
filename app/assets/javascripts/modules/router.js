@@ -1,35 +1,33 @@
 (function(_, angular) {
-  function Router($routeProvider) {
-    this.provider = $routeProvider;
 
-    _.bindAll(this, '_setRouteConfig');
+  function Router(settings) {
+    _.extend(this, settings);
+
+    _.bindAll(this, '_setRouteConfig', '_setRoutesConfig');
   }
 
-  var app = angular.module('aribeth'),
-      fn = Router.prototype;
-
-  fn.defaultConfig = {
-    controller: 'Global.GenericController',
-    controllerAs: 'controller'
+  function RouterProvider() {
+    _.bindAll(this, 'instance');
+    this.$get = [this.instance];
   };
 
-  fn.directRoutes = [
-  ];
+  var module = angular.module('router', []),
+      fn = Router.prototype,
+      fnrp = RouterProvider.prototype;
 
-  fn.customRoutes = {
-  };
-
-  fn._bindRoutes = function () {
-    _.each(this.directRoutes, this._setRouteConfig);
+  fn.bindRoutes = function () {
+    _.each(this.configs, this._setRoutesConfig);
     _.each(this.customRoutes, this._setRouteConfig);
   };
 
-  fn._setRouteConfig = function(config, route) {
-    if (typeof route !== 'string') {
-      route = config;
-      config = {};
-    }
+  fn._setRoutesConfig = function(settings) {
+    var c = this;
+    _.each(settings.routes, function(route) {
+      c._setRouteConfig(settings.config, route);
+    });
+  };
 
+  fn._setRouteConfig = function(config, route) {
     config = _.extend({}, this.defaultConfig, {
       templateUrl: this._buildTemplateFor(route)
     }, config);
@@ -52,9 +50,18 @@
     }
   }
 
-  Router.Builder = function($routeProvider) {
-    new Router($routeProvider)._bindRoutes();
+  fnrp.instance = function() {
+    return this.router || this._build();
   };
 
-  app.config(['$routeProvider', Router.Builder]);
+  fnrp._build = function routerFactory() {
+    return this.router = new Router({
+      provider: this.provider,
+      defaultConfig: this.defaultConfig,
+      configs: this.configs,
+      customRoutes: this.customRoutes
+    });
+  };
+
+  module.provider('router', RouterProvider);
 }(window._, window.angular));

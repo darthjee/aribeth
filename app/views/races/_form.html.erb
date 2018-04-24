@@ -1,0 +1,36 @@
+<div ng-hide="controller.loaded">Loading ...</div>
+
+<div ng-show="controller.loaded">
+  <div class="col-md-3 col-sm-12">
+    <div class="row">
+      <div class="panel panel-default">
+
+        <div class="panel-heading">New Race</div>
+        <div class="panel-body">
+
+          <dl class="col-sm-12">
+            <% %w(code).each do |key| %>
+              <div class="row">
+                <dt><%= as_title(key) %></dt> <dd><input ng-model="controller.data.<%= [ base, key ].compact.join('.') %>"></dd>
+              </div>
+            <% end %>
+
+            <div class="row">
+              <dt>Playable?</dt> <dd>
+              <select ng-model="controller.data.<%= [ base, :playable].compact.join('.') %>"
+                ng-options="option.value as option.name for option in [{ name: 'No', value: false }, { name: 'Yes', value: true }]">
+              </select>
+              </dd>
+            </div>
+          </dl>
+
+          <div class="col-sm-12">
+            <div class="row">
+              <button ng-click="controller.save()" class="btn btn-default">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

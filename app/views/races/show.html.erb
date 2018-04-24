@@ -1,0 +1,33 @@
+<div ng-hide="controller.loaded">Loading ...</div>
+
+<div ng-show="controller.loaded">
+  <div class="col-md-2 col-sm-12">
+    <div class="row">
+      <div class="panel panel-default">
+
+        <div class="panel-heading">{{ controller.data.name }}</div>
+        <div class="panel-body">
+
+          <dl>
+            <% %w(id code playable).each do |key| %>
+              <dt><%= as_title(key) %></dt> <dd>{{ controller.data.<%= key %> }}</dd>
+            <% end %>
+          </dl>
+          <div class="col-sm-12">
+            <div class="row">
+              <a class="btn btn-default" href='<%= angular_path_to(races_path) %>'>Return</a>
+              <a class="btn btn-default float-right" href='<%= 
+                angular_path_to(
+                  edit_race_safe_path(
+                    id: '{{ controller.data.id }}'
+                  )
+                )
+              %>'>Edit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

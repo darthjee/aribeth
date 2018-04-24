@@ -1,0 +1,36 @@
+<div ng-hide="controller.loaded">Loading ...</div>
+
+<div ng-show="controller.loaded">
+  <div class="col-md-4 col-sm-12">
+    <div class="row">
+
+      <table class="table">
+        <tr>
+          <th>#</th>
+          <% %w(code playable).each do |key| %>
+            <th><%= as_title(key) %></th>
+          <% end %>
+        </tr>
+        <tr ng-repeat="race in controller.data">
+          <td><a href="#/races/{{ race.id }}">{{ race.id }}</a></td>
+          <% %w(code playable).each do |key| %>
+            <td>{{ race.<%= key %> }}</td>
+          <% end %>
+          <td class="btn-group">
+            <a class="btn btn-default" href='<%=
+              angular_path_to(edit_race_safe_path(id: '{{ race.id }}'))
+            %>'>Edit</a>
+            <a class="btn btn-default" ng-click="controller.delete(race.id)">Delete</a>
+          </td>
+        </tr>
+      <table>
+
+      <div class="col-sm-12">
+        <div class="row">
+          <a class="btn btn-default" href='<%= angular_path_to(new_race_path) %>'>New</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
