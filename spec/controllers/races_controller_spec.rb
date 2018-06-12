@@ -41,7 +41,7 @@ describe RacesController, type: :controller do
     end
 
     context 'when requestin the REST api' do
-      it { expect(response).to be_success }
+      it { expect(response).to be_successful }
 
       it 'returns all races' do
         expect(response_json.mapk('code')).to eq(['elf'])
@@ -64,11 +64,11 @@ describe RacesController, type: :controller do
       get :new, params: parameters
     end
 
-    it { expect(response).to be_success }
+    it { expect(response).to be_successful }
 
     context 'when requesting the view' do
       before { get :new, params: { ajax: true, format: :html } }
-      it { expect(response).to be_success }
+      it { expect(response).to be_successful }
       it { expect(response).to render_template('races/new') }
     end
   end
@@ -81,7 +81,7 @@ describe RacesController, type: :controller do
 
     context 'when requestin the REST api' do
       let(:parameters) { { id: race.to_param, format: :json } }
-      it { expect(response).to be_success }
+      it { expect(response).to be_successful }
 
       it 'returns the whole race' do
         expect(response_json).to match(hash_including(expected_attributes))
@@ -96,14 +96,14 @@ describe RacesController, type: :controller do
 
   describe "GET #new" do
     before { get :new, params: { ajax: true } }
-    it { expect(response).to be_success }
+    it { expect(response).to be_successful }
     it { expect(response).to render_template('races/new') }
   end
 
   describe "GET #edit" do
     context 'when requesting the view' do
       before { get :edit, params: { id: race.id, ajax: true } }
-      it { expect(response).to be_success }
+      it { expect(response).to be_successful }
       it { expect(response).to render_template('races/edit') }
     end
   end
@@ -124,7 +124,7 @@ describe RacesController, type: :controller do
           post :create, params: {race: valid_attributes, format: :json }
         end
 
-        it { expect(response).to be_success }
+        it { expect(response).to be_successful }
 
         it 'returns the whole race' do
           expect(response_json).to match(hash_including(expected_attributes))
