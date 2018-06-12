@@ -28,6 +28,7 @@ gem 'tarquinn'
 gem 'mongoid'
 gem 'bower-rails', '~> 0.11.0'
 gem 'newrelic_rpm'
+gem 'sinclair'
 
 group :development, :test do
   gem 'factory_girl', '~> 4.0'
