@@ -58,7 +58,22 @@ describe RacesController, type: :controller do
     end
   end
 
-  describe "GET #show" do
+  describe 'GET new' do
+    let(:parameters) { { format: :json} }
+    before do
+      get :new, params: parameters
+    end
+
+    it { expect(response).to be_success }
+
+    context 'when requesting the view' do
+      before { get :new, params: { ajax: true, format: :html } }
+      it { expect(response).to be_success }
+      it { expect(response).to render_template('races/new') }
+    end
+  end
+
+  describe 'GET #show' do
     before do
       get :show, params: parameters
       expected_attributes.merge!('id' => race.to_param)
