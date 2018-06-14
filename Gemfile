@@ -31,7 +31,7 @@ gem 'newrelic_rpm'
 gem 'sinclair'
 
 group :development, :test do
-  gem 'factory_girl', '~> 4.0'
+  gem 'factory_bot'
   gem 'rspec-rails'
   gem 'pry-rails'
   gem 'pry-nav'
