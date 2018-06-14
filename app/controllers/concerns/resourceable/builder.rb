@@ -2,8 +2,8 @@ module Resourceable
   class Builder < Sinclair
     delegate :resource, to: :options_object
 
-    def initialize(clazz, resource)
-      super(clazz, resource: resource.to_s)
+    def initialize(clazz, resource, **options)
+      super(clazz, resource: resource.to_s, **options)
 
       add_resource
       add_resource_for_routes

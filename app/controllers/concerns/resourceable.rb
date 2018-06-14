@@ -3,8 +3,8 @@ module Resourceable
   include Rendereable
 
   class_methods do
-    def resource_for(name)
-      Builder.new(self, name).build
+    def resource_for(name, **options)
+      Builder.new(self, name, **options).build
     end
   end
 end
