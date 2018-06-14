@@ -4,12 +4,10 @@ module Resourceable
 
     def initialize(clazz, resource)
       super(clazz, resource: resource.to_s)
-    end
 
-    def build
       add_resource
       add_resource_for_routes
-      super
+      add_routes
     end
 
     private
@@ -27,6 +25,12 @@ module Resourceable
       add_method(:index_resource,  resource_plural)
       add_method(:edit_resource,   resource)
       add_method(:show_resource,   resource)
+    end
+
+    def add_routes
+      %i(index show new edit create update).each do |route|
+        add_method(route, 'render_basic')
+      end
     end
 
     def resource_class
