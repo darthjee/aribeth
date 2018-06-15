@@ -1,6 +1,9 @@
-module Resourceable
+require 'active_support'
+
+module Azeroth::Resourceable
   extend ActiveSupport::Concern
-  include Rendereable
+
+  autoload :Builder, 'azeroth/resourceable/builder'
 
   class_methods do
     def resource_for(name, **options)

@@ -1,4 +1,6 @@
-module Resourceable
+require 'sinclair'
+
+module Azeroth::Resourceable
   class Builder < Sinclair
     delegate :resource, to: :options_object
 

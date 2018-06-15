@@ -1,6 +1,6 @@
 class RacesController < ApplicationController
   include Common
-  include Resourceable
+  include Azeroth::Resourceable
 
   resource_for :race
 

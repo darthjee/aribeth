@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Resourceable::Builder do
+describe Azeroth::Resourceable::Builder do
   let(:clazz) do
     Class.new do
     end
