@@ -1,0 +1,2 @@
+module Azeroth
+end
