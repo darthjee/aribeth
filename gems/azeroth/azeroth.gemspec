@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'darthjee-active_ext', '>= 1.3.1'
 
   gem.add_development_dependency 'activerecord', '~> 5.x'
+  gem.add_development_dependency 'actionpack', '~> 5.x'
   gem.add_development_dependency 'sqlite3', '>= 1.3.13'
 
   gem.add_development_dependency 'bundler', '~> 1.6'

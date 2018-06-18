@@ -7,6 +7,7 @@ module Azeroth::Resourceable
     def initialize(clazz, resource, **options)
       super(clazz, resource: resource.to_s, **options)
 
+      add_params
       add_resource
       add_resource_for_routes
       add_routes
@@ -14,10 +15,14 @@ module Azeroth::Resourceable
 
     private
 
+    def add_params
+      add_method("#{resource}_id",     "params.require(:id)")
+      add_method("#{resource}_params", "params.require(:#{resource}).permit(:name)")
+    end
+
     def add_resource
       add_method(resource_plural,  "@#{resource_plural} ||= #{resource_class}.all")
       add_method(resource,         "@#{resource} ||= #{resource_plural}.find(#{resource}_id)")
-      add_method("#{resource}_id", "params.require(:id)")
     end
 
     def add_resource_for_routes
