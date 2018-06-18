@@ -17,7 +17,7 @@ module Azeroth::Resourceable
 
     def add_params
       add_method("#{resource}_id",     "params.require(:id)")
-      add_method("#{resource}_params", "params.require(:#{resource}).permit(:name)")
+      add_method("#{resource}_params", "params.require(:#{resource}).permit(:#{permitted_attributes.join(', :')})")
     end
 
     def add_resource
@@ -42,6 +42,10 @@ module Azeroth::Resourceable
 
     def resource_class
       @resource_class ||= resource.camelize.constantize
+    end
+
+    def permitted_attributes
+      @permitted_attributes ||= resource_class.attribute_names - ['id']
     end
 
     def resource_plural
