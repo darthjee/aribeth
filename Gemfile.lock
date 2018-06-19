@@ -1,11 +1,3 @@
-PATH
-  remote: gems/azeroth
-  specs:
-    azeroth (0.0.2)
-      activesupport (~> 5.x)
-      darthjee-active_ext (>= 1.3.2)
-      sinclair (>= 1.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -53,6 +45,10 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     arel (9.0.0)
+    azeroth (0.0.2)
+      activesupport (~> 5.x)
+      darthjee-active_ext (>= 1.3.2)
+      sinclair (>= 1.0.0)
     bower-rails (0.11.0)
     bson (4.3.0)
     builder (3.2.3)
@@ -240,7 +236,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  azeroth!
+  azeroth (>= 0.0.2)
   bower-rails (~> 0.11.0)
   darthjee-core_ext
   factory_bot

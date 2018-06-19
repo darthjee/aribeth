@@ -30,7 +30,7 @@ gem 'bower-rails', '~> 0.11.0'
 gem 'newrelic_rpm'
 gem 'sinclair'
 gem 'rake', '>= 12.3'
-gem 'azeroth', path: 'gems/azeroth'
+gem 'azeroth', '>= 0.0.2'
 
 group :development, :test do
   gem 'factory_bot'
