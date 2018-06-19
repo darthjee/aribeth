@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 shared_examples 'a builder that adds a resource for route' do |route|
-  let(:params) { {} }
+  let(:params)   { {} }
+  let(:instance) { clazz.new(params) }
+  let(:value)    { instance.public_send("#{route}_resource") }
 
   it "adds #{route}_resource" do
     expect { subject.build }
@@ -9,14 +11,19 @@ shared_examples 'a builder that adds a resource for route' do |route|
       .from(false).to(true)
   end
 
-  it "#{route}_resource responds with correct resource" do
-    subject.build
-    expect(clazz.new(params).get(route).to_json).to eq(expected.to_json)
+  context 'after building the method' do
+    before { subject.build }
+
+    it "#{route}_resource responds with correct resource" do
+      expect(value.to_json).to eq(expected.to_json)
+    end
   end
 end
 
 describe Azeroth::Resourceable::Builder do
   subject { described_class.new(clazz, :document) }
+
+  let(:document_params) { { name: 'The Doc'} }
 
   let(:clazz) do
     Class.new(Controller) do
@@ -39,7 +46,7 @@ describe Azeroth::Resourceable::Builder do
     describe "create_resource" do
       it_behaves_like 'a builder that adds a resource for route', :create do
         let(:expected) { Document.last }
-        let(:params) { { document: { name: 'The Doc'} } }
+        let(:params) { { document: document_params } }
       end
     end
 
@@ -57,7 +64,7 @@ describe Azeroth::Resourceable::Builder do
 
       it_behaves_like 'a builder that adds a resource for route', :update do
         let(:expected) { Document.find(document.id) }
-        let(:params) { { id: document.id, document: { name: 'The Doc' } } }
+        let(:params) { { id: document.id, document: document_params } }
       end
     end
   end

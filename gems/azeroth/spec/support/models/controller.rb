@@ -5,10 +5,6 @@ class Controller
     @params = ActionController::Parameters.new(params)
   end
 
-  def get(action)
-    send("#{action}_resource")
-  end
-
   private
 
   attr_reader :params
