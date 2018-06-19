@@ -38,6 +38,11 @@ module Azeroth::Resourceable
       %i(index show new edit create update).each do |route|
         add_method(route, 'render_basic')
       end
+      add_method(:destroy, %{
+        #{resource}.destroy
+        head :no_content
+      })
+
     end
 
     def resource_class

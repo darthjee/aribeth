@@ -4,13 +4,6 @@ class RacesController < ApplicationController
 
   resource_for :race
 
-  # DELETE /races/1
-  # DELETE /races/1.json
-  def destroy
-    race.destroy
-    head :no_content
-  end
-
   private
 
   def race_params
