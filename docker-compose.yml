@@ -25,7 +25,7 @@ services:
       - aribeth_postgres:postgres
       - aribeth_mongo:mongo
     volumes:
-      - .:/home/app/aribeth
+      - .:/home/app
       - aribeth_gems_2_4_0:/usr/local/bundle
 
   #################### CONTAINERS ####################

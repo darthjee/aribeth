@@ -1,8 +1,9 @@
-FROM darthjee/rails_bower
+FROM darthjee/taa:0.0.1
 
-WORKDIR /home/app/aribeth
-ADD Gemfile* /home/app/aribeth/
+WORKDIR /home/app
+ADD Gemfile* /home/app/
 
+USER root
 RUN bundle install --clean
 
 USER app
