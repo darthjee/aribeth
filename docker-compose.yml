@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   aribeth_mongo:
     image: mongo:3.4
